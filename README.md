@@ -38,6 +38,12 @@
 ```
 
 
+## Getting Started
+
+```bash
+cd webclient && yarn dev
+```
+
 ## License
 
 See LICENSE
