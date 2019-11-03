@@ -14,6 +14,7 @@ const Deposit = ({ router }) => {
   const [wallet, setWallet] = useState('metamask')
   const [currency, setCurrency] = useState('XRP')
   const [reloadAmount, setReloadAmount] = useState('25.00')
+
   return (
     <div>
       <Link children={<a>Back</a>} href={'/'} />

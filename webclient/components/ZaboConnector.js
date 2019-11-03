@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import web31 from '../constructors/web31'
 import Button from '@material-ui/core/Button'
 import CheckCircleIcon from '@material-ui/icons/CheckCircle'
 import green from '@material-ui/core/colors/green'
@@ -10,13 +11,30 @@ import { useZaboValue } from '../context/Zabo'
 import { shortenToDisplayAddress } from '../utils'
 
 
+function createAndLocallyStoreEthAccount() {
+  const account = web31.eth.accounts.create()
+  try {
+    window.localStorage.setItem('eth', JSON.stringify(account))
+  } catch(e) {
+    console.error(e)
+  }
+  return account
+}
+
+function getLocalStorageEthAccount() {
+  try {
+    return JSON.parse(window.localStorage.getItem('eth'))
+  } catch(e) {
+    console.error(e)
+    return null
+  }
+}
+
 
 const ZaboConnector = ({}) => {
-
   const [zaboContext, dispatch] = useZaboValue()
-
   const { account, ...rest } = zaboContext
-  console.log('account', account)
+  console.log('zabo account', account)
   return (
     <div style={{ display: 'flex', alignItems: 'center' }}>
       <span style={{ display: 'flex', alignItems: 'center' }}>
@@ -30,7 +48,8 @@ const ZaboConnector = ({}) => {
         onClick={() => {
           Zabo.connect().onConnection(async (account) => {
             console.log(account)
-            dispatch({ type: 'updateAccount', payload: account})
+            dispatch({ type: 'updateZaboAccount', payload: account})
+            dispatch({ type: 'updateEthAccount', payload: getLocalStorageEthAccount() || createAndLocallyStoreEthAccount() })
           }).onError(error => {
             console.error('account connection error:', error)
           })
