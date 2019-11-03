@@ -43,3 +43,4 @@ export function getContractAddressForAsset(asset) {
     return getContractAddressesForNetwork(web3.currentProvider.networkVersion)[asset]
 }
 
+export const shortenToDisplayAddress = (addr = '') => (addr.substring(0, 3).concat('...').concat(addr.substring(addr.length - 3)))

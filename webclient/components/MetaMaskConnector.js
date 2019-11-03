@@ -8,7 +8,7 @@ import {
 } from '../utils'
 import constructERC20Contract from '../constructors/constructERC20Contract'
 import supportedTokens from '../constants/supportedTokens'
-import { useMetaMaskValue } from '../context/MetaMask';
+import { useMetaMaskValue } from '../context/MetaMask'
 
 function metaMaskAvailable() {
   return (typeof web3 !== 'undefined' && typeof ethereum !== 'undefined')

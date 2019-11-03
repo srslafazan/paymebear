@@ -1,23 +1,21 @@
 import Link from 'next/link'
 import { withRouter } from 'next/router'
-import MetaMaskConnector from './MetaMaskConnector'
+import ZaboConnector from './ZaboConnector'
+
 
 const Header = ({ router: { pathname } }) => {
 
   return (
     <header>
       <div>
-        {/*<Link href='/'>
-          <a className={pathname === '/' ? 'is-active' : ''}>Dashboard</a>
-        </Link>*/}
-        <span>InstaWealth</span>
+        <span>Payme Bear</span>
       </div>
-      <MetaMaskConnector />
+      <ZaboConnector />
       <style jsx>{`
         header {
-          margin-bottom: 25px;
           display: flex;
           justify-content: space-between;
+          align-items: center;
         }
         a {
           font-size: 14px;

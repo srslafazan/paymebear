@@ -45,26 +45,20 @@
     "isomorphic-unfetch": "^3.0.0",
     "jest": "^24.9.0",
     "next": "^9.0.5",
-    "next-redux-wrapper": "^2.1.0",
+    "next-redux-wrapper": "^4.0.1",
     "node-sass": "^4.12.0",
     "prop-types": "^15.6.0",
     "ramda": "^0.26.1",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
-    "react-redux": "^6.0.1",
-    "redux": "^4.0.1",
-    "redux-devtools-extension": "^2.13.2",
-    "redux-thunk": "^2.2.0",
-    "web3": "^1.2.1",
+    "react-redux": "^7.1.1",
+    "redux": "^4.0.4",
+    "redux-devtools-extension": "^2.13.8",
+    "redux-thunk": "^2.3.0",
+    "web3": "^1.2.2",
     "ws": "^7.1.2",
     "xmlhttprequest": "^1.8.0",
-    "yarn": "^1.17.3"
+    "zabo-sdk-js": "^0.6.2"
   },
-  "devDependencies": {
-    "@mblackmblack/to-seconds": "^0.1.0",
-    "bignumber.js": "^9.0.0",
-    "eth-token-recover": "^2.3.4",
-    "openzeppelin-solidity": "^2.3.0",
-    "truffle": "^5.0.41"
-  }
+  "devDependencies": {}
 }
