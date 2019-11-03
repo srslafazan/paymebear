@@ -11,8 +11,10 @@ import MenuItem from '@material-ui/core/MenuItem'
 import Button from '@material-ui/core/Button'
 
 import {Transaction as Tx} from 'ethereumjs-tx'
+import { Marketplace } from "aave-js";
 
 import ERC20ABI from '../contracts/ERC20.abi.json'
+import cDAIABI from '../contracts/cDAI.abi.json'
 
 import Zabo from 'zabo-sdk-js'
 import zabo from '../constructors/zabo'
@@ -20,40 +22,22 @@ import { useZaboValue } from '../context/Zabo'
 import { useLocalEthValue } from '../context/LocalEth'
 
 import constructERC20Contract from '../constructors/constructERC20Contract'
+import constructContract from '../constructors/constructContract'
 import {
   getContractAddressForAsset,
 } from '../utils'
 
 
-// function sendERC20(contractAddress, fromAddr, toAddr) {
-//   // var count = web3.eth.getTransactionCount(fromAddr);
-//   var contract = web3.eth.contract(ERC20ABI).at(contractAddress);
-//   var rawTransaction = {
-//       "from": fromAddr,
-//       // "nonce": web3.toHex(count),
-//       "gasPrice": "0x04e3b29200",
-//       "gasLimit": "0x7458",
-//       "to": contractAddress,
-//       "value": "0x0",
-//       "data": contract.transfer.getData(toAddr, 10, {from: fromAddr}),
-//       "chainId": '42'
-//   };
 
-//   // var privKey = new Buffer('fc3...', 'hex');
-//   var tx = new Tx(rawTransaction);
+// const signupParams = [
+//   "srslafazan@gmail.com",
+//   "Frankie",
+//   "a-super-random-password",
+//   "Titans"
+// ]
+// const API_SECRET_KEY = await marketplace.utils.signup(...signupParams)
 
-//   // tx.sign(privKey);
-//   var serializedTx = tx.serialize();
-
-//   web3.eth.sendRawTransaction('0x' + serializedTx.toString('hex'), function(err, hash) {
-//       if (!err)
-//           console.log(hash);
-//       else
-//           console.log(err);
-//   });
-
-// }
-
+// const marketplace = new Marketplace("");
 
 
 const Deposit = ({ router }) => {
@@ -62,19 +46,8 @@ const Deposit = ({ router }) => {
   const { account, ...rest } = zaboContext
   const [localEthContext] = useLocalEthValue()
 
-  const [currency, setCurrency] = useState(account && account.currencies && account.currencies[0])
+  const [currency, setCurrency] = useState(account && account.currencies && account.currencies[0] || 'DAI')
   const [reloadAmount, setReloadAmount] = useState('25.00')
-
-
-  // const contract = constructERC20Contract(getContractAddressForAsset('DAI'))
-  // console.log('contract', contract)
-  // console.log('localEthContext', localEthContext)
-  // if (typeof ethereum !== 'undefined' && ethereum.selectedAddress) {
-  //   contract.balanceOf(ethereum.selectedAddress, (e, r) => {
-  //     if (e) return console.error(e)
-  //     console.log(r.toString())
-  //   })
-  // }
 
   return (
     <div>
@@ -83,7 +56,7 @@ const Deposit = ({ router }) => {
       <Grid container>
         <Grid item xs={12}>
           Current Balance <br />
-          ${localEthContext['DAI'] || '0.00'}
+          ${typeof web3 !== 'undefined' && web3.fromWei(localEthContext['DAI']) || '0.00'}
         </Grid>
         <Grid item xs={12}>
           <FormControl fullWidth>
@@ -114,7 +87,7 @@ const Deposit = ({ router }) => {
                 id: 'SelectCurrency',
               }}
             >
-              {(account && account.currencies || []).map((val, i) => <MenuItem key={i} value={val.currency}>{val.currency} ({val.balance})</MenuItem>)}
+              {(account && account.currencies || [{ currency: 'DAI' }]).map((val, i) => <MenuItem key={i} value={val.currency}>{val.currency}</MenuItem>)}
             </Select>
             </FormControl>
         </Grid>
@@ -134,55 +107,83 @@ const Deposit = ({ router }) => {
           </FormControl>
         </Grid>
         <Grid item xs={12}>
+          <br />
           <Button
             children={`Add $${reloadAmount}`}
             variant="contained"
             color="primary"
             onClick={async () => {
               console.log('deposit')
-              {/*return await axios.post('/api/v1/send', {
-                currency,
-                toAddress: localEthContext.account.address,
-                amount: 0.05,
-                accountId: account.id,
-              })*/}
 
+              // async
+              // use zabo to fund wallet
               try {
+                console.log('sending zabo')
                 let tx = await Zabo.transactions.send({
-                  currency: 'DAI',
+                  currency,
                   toAddress: localEthContext.account.address,
                   amount: web3.fromWei(reloadAmount.toString()),
                 })
-                if (tx.request_link) {
+                console.log('done: tx: ', tx)
+                {/*if (tx.request_link) {
                   let qrCode = Zabo.utils.getQRCode(tx.request_link)
                   document.getElementById('placeHolder').innerHTML = qrCode
                 } else {
                   console.log(tx)
-                }
+                }*/}
               } catch (error) {
                 console.log(error)
               }
 
+              // async
+              // use aave to provide interest product
+              {/*const lenderAddress = localEthContext.account.address
+              console.log('lenderAddress', lenderAddress)
+              const loanOfferParams = {
+                  minimumLoanAmount: 1000,
+                  maximumLoanAmount: 10000,
+                  moe: "LEND",
+                  collaterals: { id: 0, symbol: "LEND", mpr: 0.25, ltv: 50, valid: true },
+                  durationRange: { min: 1, max: 12 },
+              };
+              const tx = await marketplace.offers.create(lenderAddress, loanOfferParams);
+              console.log('aave tx: ', tx)
+              await web3.eth.sendTransaction(tx);*/}
 
-              {/*const contract = constructERC20Contract(getContractAddressForAsset('DAI'))
-              console.log('contract', contract)
-              console.log('localEthContext', localEthContext)
-              contract.balanceOf(ethereum.selectedAddress, (e, r) => {
-                if (e) return console.error(e)
-                console.log(r.toString())
-              })*/}
+              // async
+              // use compound finance to provide interest product
 
-{/*
-              await ethereum.enable()
-              const contract = constructERC20Contract(getContractAddressForAsset('DAI'))
-              contract.balanceOf(ethereum.selectedAddress, (err, res) => {
-                if (err) {
-                  console.error(err)
-                  return
-                }
-                return console.log('dai: ', res.toString())
-              })
-              sendERC20(getContractAddressForAsset('DAI'), account.address, localEthContext.account.address)
+              {/*const contract = web3.eth.contract(cDAIABI).at(getContractAddressForAsset('cDai'))*/}
+//
+{/*              const method = contract.methods.mint(1)
+//
+              const txObject = {
+                data: method.encodeABI(),
+                from: localEthContext.account.address,
+                to: contract._address,
+                // nonce,
+              }
+
+*/}
+
+              {/*console.log('contract: ', contract)*/}
+
+              // contract.mint(web3.toWei( web3.toHex( Math.floor(reloadAmount / 2).toString() ) ), (err, res) => {
+              //   if (err) {
+              //     console.error(err)
+              //     return
+              //   }
+              //   console.log('result, compound cdai mint: ', res.toString())
+              //   return res.toString()
+              // })
+
+{/*              contract
+                .supplyRatePerBlock()
+                .call()
+                .then((result) => {
+                  console.log(`Supply Rate PerBlock 為: ${result / 1e18}`);
+                })
+                .catch(console.error);
 */}
             }}
           />

@@ -36,6 +36,7 @@ export function getContractAddressesForNetwork(network) {
         case '4': return {}
         case '42': return {
             DAI: '0xFf795577d9AC8bD7D90Ee22b6C1703490b6512FD', // aave kovan
+            cDAI: '0x0a1e4d0b5c71b955c0a5993023fc48ba6e380496',
         }
         default: return {}
     }
