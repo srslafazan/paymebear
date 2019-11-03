@@ -11,6 +11,7 @@ import muiTheme from '../constructors/muiTheme'
 
 import { MetaMaskProvider } from '../context/MetaMask';
 import { ZaboProvider } from '../context/Zabo';
+import { LocalEthProvider } from '../context/LocalEth';
 
 import '../styles/index.sass'
 
@@ -31,12 +32,14 @@ class MyApp extends App {
     return (
        <MetaMaskProvider>
         <ZaboProvider>
-          <Provider store={store}>
-            <MuiThemeProvider theme={createMuiTheme(muiTheme)}>
-              <CssBaseline />
-              <Component {...pageProps} />
-            </MuiThemeProvider>
-          </Provider>
+          <LocalEthProvider>
+            <Provider store={store}>
+              <MuiThemeProvider theme={createMuiTheme(muiTheme)}>
+                <CssBaseline />
+                <Component {...pageProps} />
+              </MuiThemeProvider>
+            </Provider>
+          </LocalEthProvider>
         </ZaboProvider>
       </MetaMaskProvider>
     )

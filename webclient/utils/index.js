@@ -34,13 +34,15 @@ export function getContractAddressesForNetwork(network) {
         }
         case '3': return {}
         case '4': return {}
-        case '42': return {}
+        case '42': return {
+            DAI: '0xFf795577d9AC8bD7D90Ee22b6C1703490b6512FD', // aave kovan
+        }
         default: return {}
     }
 }
 
 export function getContractAddressForAsset(asset) {
-    return getContractAddressesForNetwork(web3.currentProvider.networkVersion)[asset]
+    return getContractAddressesForNetwork(typeof web3 !== 'undefined' && web3.currentProvider.networkVersion || '42')[asset]
 }
 
 export const shortenToDisplayAddress = (addr = '') => (addr.substring(0, 3).concat('...').concat(addr.substring(addr.length - 3)))

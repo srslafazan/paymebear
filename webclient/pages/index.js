@@ -7,26 +7,15 @@ import GetMoreBears from '../components/GetMoreBears'
 import ActionButtons from '../components/ActionButtons'
 import Footer from '../components/Footer'
 
-import { makeStyles } from '@material-ui/core/styles'
-
-const useStyles = makeStyles(theme => ({
-  root: {
-    flexGrow: 1,
-  },
-  paper: {
-    padding: theme.spacing(1),
-    textAlign: 'center',
-    color: theme.palette.text.secondary,
-  },
-}))
+import useCommonStyles from '../constructors/useCommonStyles'
 
 
 export default ({}) => {
-  const classes = useStyles()
+  const classes = useCommonStyles()
 
   return (
     <App>
-      <Grid container spacing={0} justify="center">
+      <Grid container className={classes.root} spacing={0} justify="center">
         <Grid className={classes.paper} item xs={11}><Header /></Grid>
         <Grid className={classes.paper} item xs={11}><Account /></Grid>
         <Grid className={classes.paper} item xs={11}><GetMoreBears /></Grid>

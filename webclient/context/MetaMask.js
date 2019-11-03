@@ -16,6 +16,7 @@ const reducer = (state, action) => {
     case 'updateNetworkName': return { ...state, networkName: action.payload }
     case 'updateNetworkId': return { ...state, networkId: action.payload }
     default:
+      console.log('state')
       return state
   }
 }

@@ -4,7 +4,11 @@ export const ZaboContext = createContext()
 
 const reducer = (state, action) => {
   switch (action.type) {
-    case 'updateZaboAccount': return { ...state, account: action.payload }
+    case 'updateZaboAccount':
+      try {
+        localStorage.setItem('zabo', JSON.stringify(action.payload))
+      } catch (e) {}
+      return { ...state, account: action.payload }
     case 'updateEthAccount': return { ...state, eth: action.payload }
     default:
       return state
@@ -13,6 +17,12 @@ const reducer = (state, action) => {
 
 export const ZaboProvider = ({ initialState = { account: null, eth: null }, children }) => {
   const [state, dispatch] = useReducer(reducer, initialState)
+  useEffect(() => {
+    try {
+      dispatch({ type: 'updateZaboAccount', payload: JSON.parse(localStorage.getItem('zabo') )})
+    } catch (e) {}
+  }, [typeof window !== 'undefined' && typeof window.localStorage !== 'undefined'])
+
 
   return (
     <ZaboContext.Provider value={[state, dispatch]}>
