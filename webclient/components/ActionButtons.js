@@ -9,6 +9,7 @@ const ActionButtons = ({ router }) => {
     <div style={{ display: 'flex', justifyContent: 'space-evenly', alignItems: 'center' }}>
       <Button
         children={'Add Money'}
+        onClick={() => router.push('/deposit')}
         color="primary"
         variant="contained"
         size={'small'}

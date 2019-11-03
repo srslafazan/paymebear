@@ -4,8 +4,12 @@ import CheckCircleIcon from '@material-ui/icons/CheckCircle'
 import green from '@material-ui/core/colors/green'
 import red from '@material-ui/core/colors/red'
 import { getNetworkName } from '../utils'
+
+import Zabo from 'zabo-sdk-js'
 import { useZaboValue } from '../context/Zabo'
 import { shortenToDisplayAddress } from '../utils'
+
+
 
 const ZaboConnector = ({}) => {
 

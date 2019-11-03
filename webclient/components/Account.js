@@ -23,7 +23,7 @@ export default ({}) => {
         </Grid>
         <Grid item xs={8}>
           <div style={{ display: 'flex', justifyContent: 'flex-end' }}>{'$1,024.00'}</div>
-          <div style={{ display: 'flex', justifyContent: 'flex-end' }}>{`as of ${hours12(date)}:${date.getMinutes()}`}</div>
+          <div style={{ display: 'flex', justifyContent: 'flex-end' }}>{`as of ${hours12(date)}:${date.getMinutes()} ${hours12(date) > 11 ? 'pm' : 'am'}`}</div>
         </Grid>
       </Grid>
     </Paper>
