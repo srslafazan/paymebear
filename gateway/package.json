@@ -63,7 +63,7 @@
     "graphql-tools": "^4.0.3",
     "graphql-type-json": "^0.2.1",
     "graphql-yoga": "^1.16.7",
-    "handlebars": "^4.0.12",
+    "handlebars": "^4.5.3",
     "jest": "^24.9.0",
     "jsonwebtoken": "^8.4.0",
     "mjml": "^4.2.1",
