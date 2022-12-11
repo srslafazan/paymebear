@@ -42,7 +42,7 @@
     "dotenv": "^8.1.0",
     "dotenv-webpack": "^1.7.0",
     "ethereumjs-tx": "^2.1.1",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "ganache-cli": "^6.7.0",
     "http-proxy-middleware": "^0.20.0",
     "isomorphic-unfetch": "^3.0.0",
