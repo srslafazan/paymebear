@@ -65,7 +65,7 @@
     "graphql-yoga": "^1.16.7",
     "handlebars": "^4.0.12",
     "jest": "^24.9.0",
-    "jsonwebtoken": "^8.4.0",
+    "jsonwebtoken": "^9.0.0",
     "mjml": "^4.2.1",
     "module-alias": "^2.1.0",
     "morgan": "^1.9.0",
